@@ -9,6 +9,6 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>18</maven.compiler.source>
         <maven.compiler.target>18</maven.compiler.target>
-        <exec.mainClass>myproject.demojdbcdao.DemoJdbcDao</exec.mainClass>
+        <exec.mainClass>demojdbcdao.Program</exec.mainClass>
     </properties>
 </project>
