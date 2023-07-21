@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,7 +25,35 @@ public class SellerDaoJdbc implements SellerDao{
     
     @Override
     public void Insert(Seller seller) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        PreparedStatement stmt = null;
+        Connection conexao = null;
+        try{
+            conexao = conn.getConection();
+            stmt = conexao.prepareStatement("INSERT INTO seller " +
+                                        "(Name, Email, BirthDate, BaseSalary, DepartmentId) " +
+                                        "VALUES " +
+                                        "(?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+            stmt.setString(1,seller.getName());
+            stmt.setString(2,seller.getEmail());
+            stmt.setDate(3, new java.sql.Date(seller.getBirthDay().getTime()));
+            stmt.setDouble(4, seller.getBaseSalary());
+            stmt.setInt(5,seller.getDepartment().getId());
+            int rowsAffected = stmt.executeUpdate();
+            if(rowsAffected>0){
+                ResultSet rs = stmt.getGeneratedKeys();
+                if(rs.next()){
+                    int id = rs.getInt(1);
+                    seller.setId(id);
+                }else{
+                    System.out.println("Erro, nunha linha afetada");
+                }
+                conn.close(rs, stmt, conexao);
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }finally{
+            conn.close(stmt, conexao);
+        }
     }
 
     @Override

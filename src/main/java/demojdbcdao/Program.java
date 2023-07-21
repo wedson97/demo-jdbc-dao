@@ -1,7 +1,7 @@
 package demojdbcdao;
 import demojdbcdao.Dao.DaoFactory;
-import demojdbcdao.Dao.Impl.SellerDaoJdbc;
 import demojdbcdao.Dao.SellerDao;
+import java.util.Date;
 import java.util.List;
 public class Program {
 
@@ -23,5 +23,9 @@ public class Program {
         for(Seller i: listSellerAll){
             System.out.println(i);
         }
+        System.out.println("-------- teste 4 --------");
+        Seller sellerTeste = new Seller(null,"Greg","greg@gmail.com",new Date(), 4000.0, dep);
+        sellerdao.Insert(sellerTeste);
+        System.out.println(sellerTeste.getId());
     }
 }
