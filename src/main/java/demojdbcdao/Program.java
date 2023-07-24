@@ -35,5 +35,11 @@ public class Program {
         for(Seller i: listSellerAll){
             System.out.println(i);
         }
+        System.out.println("-------- teste 6 --------");
+        sellerdao.DeleteById(4);
+        listSellerAll = sellerdao.findAll();
+        for(Seller i: listSellerAll){
+            System.out.println(i);
+        }
     }
 }
