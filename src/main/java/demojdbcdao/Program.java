@@ -24,8 +24,16 @@ public class Program {
             System.out.println(i);
         }
         System.out.println("-------- teste 4 --------");
-        Seller sellerTeste = new Seller(null,"Greg","greg@gmail.com",new Date(), 4000.0, dep);
+        /*Seller sellerTeste = new Seller(null,"Greg","greg@gmail.com",new Date(), 4000.0, dep);
         sellerdao.Insert(sellerTeste);
-        System.out.println(sellerTeste.getId());
+        System.out.println(sellerTeste.getId());*/
+        System.out.println("-------- teste 5 --------");
+        seller = sellerdao.findById(1);
+        seller.setName("Martha waine");
+        sellerdao.Update(seller);
+        listSellerAll = sellerdao.findAll();
+        for(Seller i: listSellerAll){
+            System.out.println(i);
+        }
     }
 }

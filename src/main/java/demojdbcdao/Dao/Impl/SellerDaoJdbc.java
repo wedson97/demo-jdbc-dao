@@ -57,8 +57,36 @@ public class SellerDaoJdbc implements SellerDao{
     }
 
     @Override
-    public void Update(Seller Seller) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void Update(Seller seller) {
+        PreparedStatement stmt = null;
+        Connection conexao = null;
+        try{
+            conexao = conn.getConection();
+            stmt = conexao.prepareStatement("UPDATE seller " +
+                                    "SET Name = ?, Email = ?, BirthDate = ?, BaseSalary = ?, DepartmentId = ? " +
+                                    "WHERE Id = ?", Statement.RETURN_GENERATED_KEYS);
+            stmt.setString(1,seller.getName());
+            stmt.setString(2,seller.getEmail());
+            stmt.setDate(3, new java.sql.Date(seller.getBirthDay().getTime()));
+            stmt.setDouble(4, seller.getBaseSalary());
+            stmt.setInt(5,seller.getDepartment().getId());
+            stmt.setInt(6,seller.getId());
+            int rowsAffected = stmt.executeUpdate();
+            if(rowsAffected>0){
+                ResultSet rs = stmt.getGeneratedKeys();
+                if(rs.next()){
+                    int id = rs.getInt(1);
+                    seller.setId(id);
+                }else{
+                    System.out.println("Erro, nunha linha afetada");
+                }
+                conn.close(rs, stmt, conexao);
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }finally{
+            conn.close(stmt, conexao);
+        }
     }
 
     @Override
